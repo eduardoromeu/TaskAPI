@@ -1,0 +1,41 @@
+aula 1
+https://www.eclipse.org/downloads/packages/
+
+aula 2
+https://start.spring.io/
+
+https://www.webjars.org/
+
+https://mvnrepository.com/
+
+webjar
+<dependency>
+<groupId>org.springframework.boot</groupId>
+<artifactId>spring-boot-starter-thymeleaf</artifactId>
+</dependency>
+		
+<dependency>
+	<groupId>org.webjars</groupId>
+	<artifactId>webjars-locator-core</artifactId>
+	</dependency>
+<dependency>
+	<groupId>org.webjars</groupId>
+	<artifactId>bootstrap</artifactId>
+	<version>4.5.2</version>
+	</dependency>
+	<dependency>
+   	<groupId>org.webjars</groupId>
+   		<artifactId>jquery</artifactId>
+   		<version>3.5.1</version>
+</dependency>
+
+
+<dependency>
+	<groupId>org.webjars</groupId>
+	<artifactId>jquery-maskedinput</artifactId>
+	<version>1.4.0</version>
+</dependency>
+
+imports da HomeController
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
