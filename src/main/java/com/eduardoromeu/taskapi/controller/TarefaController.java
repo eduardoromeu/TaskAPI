@@ -1,7 +1,10 @@
 package com.eduardoromeu.taskapi.controller;
 
 import com.eduardoromeu.taskapi.entity.Tarefa;
+import com.eduardoromeu.taskapi.service.TarefaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +18,8 @@ import java.util.List;
 @RequestMapping("/tarefas")
 public class TarefaController {
 
-    List<Tarefa> tarefas = new ArrayList<>();
+    @Autowired
+    private TarefaService service;
 
     @GetMapping("/cadastro")
     public String cadastro(Tarefa tarefa){
@@ -25,71 +29,33 @@ public class TarefaController {
     @PostMapping("/salvar")
     public String salvar(Tarefa tarefa){
 
-        Long id = tarefas.size() + 1L;
-        Tarefa t = new Tarefa();
-
-        t.setId(id);
-        t.setNome(tarefa.getNome());
-        t.setDataEntrega(tarefa.getDataEntrega());
-        t.setResponsavel(tarefa.getResponsavel());
-        tarefas.add(t);
+        service.salvar(tarefa);
 
         return "redirect:/tarefas/lista";
     }
 
     @GetMapping("/lista")
-    public ModelAndView lista(){
-        ModelAndView mv = new ModelAndView("tarefa/lista");
-        mv.addObject("tarefas", tarefas);
-        return mv;
+    public String lista(ModelMap model){
+        model.addAttribute("tarefas", service.buscaTodos());
+        return "tarefa/lista";
+
     }
 
     @PostMapping("/editar")
     public String editar(Tarefa tarefa) {
-
-        Tarefa t = new Tarefa();
-        for (int i = 0; i < tarefas.size(); i++) {
-            if (tarefas.get(i).getId().equals(tarefa.getId())) {
-                t = tarefas.get(i);
-
-            }
-        }
-
-        tarefas.set(tarefas.indexOf(t), tarefa);
-
-
-        return "redirect:/tarefas/lista";
+        service.editar(tarefa);
+        return "redirect:/tarefas/cadastro";
     }
 
     @GetMapping("/excluir/{id}")
-    public String excluir(@PathVariable("id") Long id ) {
-
-        Tarefa tarefa;
-        for (int i = 0; i < tarefas.size(); i++) {
-            if (tarefas.get(i).getId().equals(id)) {
-                tarefa = tarefas.get(i);
-                tarefas.remove(tarefa);
-
-            }
-        }
-
-        return "redirect:/tarefas/lista";
+    public String excluir(@PathVariable("id") Long id, ModelMap model) {
+        service.excluir(id);
+        return lista(model);
     }
 
     @GetMapping("/editar/{id}")
-    public ModelAndView preEditar(@PathVariable("id") Long id) {
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("tarefa/cadastro");
-
-        Tarefa tarefa = null;
-        for (int i = 0; i < tarefas.size(); i++) {
-            if (tarefas.get(i).getId().equals(id)) {
-                tarefa = tarefas.get(i);
-
-            }
-        }
-
-        mv.addObject("tarefa", tarefa);
-        return mv;
+    public String preEditar(@PathVariable("id") Long id, ModelMap model) {
+        model.addAttribute("tarefa", service.buscarPorId(id));
+        return "/tarefa/cadastro";
     }
 }
