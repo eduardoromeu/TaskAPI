@@ -1,15 +1,23 @@
 package com.eduardoromeu.taskapi.entity;
 
+import jakarta.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 
-public class Tarefa {
+@Entity
+@Table(name="TAREFA")
+public class Tarefa extends AbstractEntity<Long> {
 
-    private Long id;
+    @Column(name="nome", nullable = false, unique = true, length = 60)
     private String nome;
 
+    @Column(name="data_entrega", nullable = false, columnDefinition = "DATE")
     @DateTimeFormat(iso=DateTimeFormat.ISO.DATE)
     private LocalDate dataEntrega;
+
+    @Column(name="responsavel", nullable = false, length = 60)
     private String responsavel;
 
     public String getNome() {
@@ -34,23 +42,5 @@ public class Tarefa {
 
     public void setResponsavel(String responsavel) {
         this.responsavel = responsavel;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Override
-    public String toString() {
-        return "Tarefa{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", dataEntrega=" + dataEntrega +
-                ", responsavel='" + responsavel + '\'' +
-                '}';
     }
 }
