@@ -11,20 +11,21 @@
 </head>
 <body>
 
-<form th:action="${tarefa.id == null} ? @{/tarefas/salvar} : @{/tarefas/editar}" th:object="${tarefa}" method="POST">
+<form th:action="|${ tarefa == null || tarefa.id == null ? '/tarefas/salvar' : '/tarefas/editar'}|" th:object="${tarefa}" method="POST">
+    <div th:replace="fragments/validacao :: validacao"></div>
     <input type="hidden" th:field="*{id}">
     <div class="mb-3">
-        <label for="exampleInputTarefa" class="form-label">Nome da Tarefa</label>
+        <label for="nome" class="form-label">Nome da Tarefa</label>
         <input type="text" class="form-control" id="nome" name="nome" th:field="${nome}">
     </div>
 
     <div class="mb-3">
-        <label for="exampleInputDataEntrega" class="form-label">Data entrega: </label>
+        <label for="datacriacao" class="form-label">Data entrega: </label>
         <input type="date" class="form-control" id="datacriacao" aria-describedby="datalHelp" name="dataEntrega" th:field="${dataEntrega}">
 
     </div>
     <div class="mb-3">
-        <label for="exampleInputResponsavel" class="form-label">Responsável: </label>
+        <label for="responsavel" class="form-label">Responsável: </label>
         <input type="text" class="form-control" id="responsavel" aria-describedby="responsavellHelp" name="responsavel" th:field="${responsavel}">
 
     </div>

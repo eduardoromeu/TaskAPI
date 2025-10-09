@@ -2,9 +2,11 @@ package com.eduardoromeu.taskapi.controller;
 
 import com.eduardoromeu.taskapi.entity.Tarefa;
 import com.eduardoromeu.taskapi.service.TarefaService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,16 +24,17 @@ public class TarefaController {
     private TarefaService service;
 
     @GetMapping("/cadastro")
-    public String cadastro(Tarefa tarefa){
+    public String cadastro(ModelMap model) {
         return "tarefa/cadastro";
     }
 
     @PostMapping("/salvar")
-    public String salvar(Tarefa tarefa){
-
+    public String salvar(@Valid Tarefa tarefa,BindingResult result) {
+        if (result.hasErrors()) {
+            return "/tarefa/cadastro";
+        }
         service.salvar(tarefa);
-
-        return "redirect:/tarefas/lista";
+        return "redirect:/tarefas/cadastro";
     }
 
     @GetMapping("/lista")
@@ -41,8 +44,12 @@ public class TarefaController {
 
     }
 
+    // editar e excluir
     @PostMapping("/editar")
-    public String editar(Tarefa tarefa) {
+    public String editar(@Valid Tarefa tarefa, BindingResult result) {
+        if (result.hasErrors()) {
+            return "/tarefa/cadastro";
+        }
         service.editar(tarefa);
         return "redirect:/tarefas/cadastro";
     }
