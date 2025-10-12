@@ -1,13 +1,13 @@
-package com.eduardoromeu.demorest;
+package com.eduardoromeu.taskapi;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DemorestApplication {
+public class TaskAPIApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemorestApplication.class, args);
+		SpringApplication.run(TaskAPIApplication.class, args);
 	}
 
 }

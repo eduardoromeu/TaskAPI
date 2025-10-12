@@ -1,10 +1,10 @@
-package com.eduardoromeu.demorest;
+package com.eduardoromeu.taskapi;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DemorestApplicationTests {
+class TaskAPIApplicationTests {
 
 	@Test
 	void contextLoads() {

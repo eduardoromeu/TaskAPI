@@ -1,4 +1,4 @@
-package com.eduardoromeu.demorest.controller;
+package com.eduardoromeu.taskapi.controller;
 
 import java.util.List;
 
@@ -12,16 +12,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.eduardoromeu.demorest.model.Contato;
-import com.eduardoromeu.demorest.repository.ContatoRepository;
+import com.eduardoromeu.taskapi.model.Tarefa;
+import com.eduardoromeu.taskapi.repository.TarefaRepository;
 
 @RestController
-@RequestMapping({ "/contatos" })
-public class ContatoController {
-	private ContatoRepository repository;
+@RequestMapping({ "/tarefas" })
+public class TarefaController {
+	private TarefaRepository repository;
 
-	ContatoController(ContatoRepository contatoRepository) {
-		this.repository = contatoRepository;
+	TarefaController(TarefaRepository tarefaRepository) {
+		this.repository = tarefaRepository;
 	}
 
 	@GetMapping
@@ -36,17 +36,17 @@ public class ContatoController {
 	}
 
 	@PostMapping
-	public Contato create(@RequestBody Contato contato) {
-		return repository.save(contato);
+	public Tarefa create(@RequestBody Tarefa tarefa) {
+		return repository.save(tarefa);
 	}
 
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody Contato contato) {
+	public ResponseEntity<?> update(@PathVariable("id") long id, @RequestBody Tarefa tarefa) {
 		return repository.findById(id).map(record -> {
-			record.setName(contato.getName());
-			record.setEmail(contato.getEmail());
-			record.setFone(contato.getFone());
-			Contato updated = repository.save(record);
+			record.setNome(tarefa.getNome());
+			record.setDataEntrega(tarefa.getDataEntrega());
+			record.setResponsavel(tarefa.getResponsavel());
+			Tarefa updated = repository.save(record);
 			return ResponseEntity.ok().body(updated);
 		}).orElse(ResponseEntity.notFound().build());
 	}
