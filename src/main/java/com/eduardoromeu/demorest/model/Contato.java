@@ -1,4 +1,4 @@
-package com.example.demorest.model;
+package com.eduardoromeu.demorest.model;
 
 import java.util.Objects;
 

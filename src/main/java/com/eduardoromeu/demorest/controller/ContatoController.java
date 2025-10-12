@@ -1,4 +1,4 @@
-package com.example.demorest.controller;
+package com.eduardoromeu.demorest.controller;
 
 import java.util.List;
 
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demorest.model.Contato;
-import com.example.demorest.repository.ContatoRepository;
+import com.eduardoromeu.demorest.model.Contato;
+import com.eduardoromeu.demorest.repository.ContatoRepository;
 
 @RestController
 @RequestMapping({ "/contatos" })
